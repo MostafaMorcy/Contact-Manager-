@@ -3,14 +3,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CoreService } from 'src/app/core/core.service';
+import { CoreService } from 'src/app/services/core/core.service';
 import { EmployeeService } from './../../services/employee.service';
-import { EmpAddEditComponent } from 'src/app/emp-add-edit/emp-add-edit.component';
+import { EmpAddEditComponent } from 'src/app/components/emp-add-edit/emp-add-edit.component';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
   displayedColumns: string[] = [
@@ -19,7 +19,7 @@ export class ListComponent implements OnInit {
     'phone',
     'address',
     'notes',
-    'action'
+    'action',
   ];
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -60,6 +60,7 @@ export class ListComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
   deleteEmployee(_id: string) {
     this._empService.deleteEmployee(_id).subscribe({
       next: (res) => {
@@ -69,12 +70,13 @@ export class ListComponent implements OnInit {
       error: console.log,
     });
   }
+
   openEditForm(data: any) {
     const dialogRef = this._dialog.open(EmpAddEditComponent, {
       data,
     });
     dialogRef.afterClosed().subscribe({
-      next: (val) =>{
+      next: (val) => {
         if (val) {
           this.getEmployeeList();
         }

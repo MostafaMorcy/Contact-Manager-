@@ -10,7 +10,6 @@ const createContact = catchAsyncError(async (req, res) => {
 
 const getAllContacts = catchAsyncError(async (req, res, next) => {
   let apiFeatures = new ApiFeatures(contactModel.find(), req.query)
-    .paginate()
     .field()
     .search()
     .sort()
